@@ -1,0 +1,133 @@
+.dashboard-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.mystry-clues-container{
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 250px;
+    min-height: 300px;
+    max-width: 50%;
+    background-color: #1b1a77;
+    color: #fff;
+}
+
+.difference-img{
+    margin: 20px;
+}
+
+/* spot difference game css */
+
+.spotDifference-message-box{
+    margin: 20px;
+    font-size: 25px;
+}
+
+.spotDifference-message-instructions{
+    font-size: 15px;
+    margin: 20px 0px;
+}
+
+.spotDifference-message-instructions p{
+    color: #c0c0c0;
+}
+
+/* Memory matrix game css */
+
+.memory-matrix-container{
+    width: 40%;
+    margin: auto;
+    text-align: center;
+}
+
+.game-board{
+    display: flex;
+    flex-wrap: wrap;
+    /* width: 450px; */
+}
+.flex{
+    display: flex;
+    flex-direction: row;
+}
+.card {
+    background-color: white;
+    border: 2px solid black;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    height: 100px;
+    width: 100px;
+    margin: 5px;
+}
+div{
+    margin: 10px;
+}
+
+.instructions{
+    margin: auto;
+  width: 50%;
+  border: 3px solid black;
+  padding: 10px;
+}
+
+/* Observation Game */
+
+.observation-option{
+    border: 2px solid black;
+    background-color: #3b3b3b;
+    padding: 5px;
+}
+
+.option-selected{
+    border: 2px solid #1b1a77;
+}
+
+
+/* timer */
+.timer{
+    text-align: center;
+    width: 50%;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+	font-family: verdana;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+h1 {
+    color: blueviolet;
+	text-align: center;
+}
+
+.digit {
+	font-size: 40px;
+	color: black;
+}
+
+.txt {
+	font-size: 20px;
+	color: black;
+}
+
+
+
+
+

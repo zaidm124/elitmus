@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "12345678",
+    "database": "elitmus_db",
+    "host": "34.122.241.229",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "12345678",
+    "database": "elitmus_db",
+    "host": "34.122.241.229",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "12345678",
+    "database": "elitmus_db",
+    "host": "34.122.241.229",
+    "dialect": "mysql"
+  }
+}
