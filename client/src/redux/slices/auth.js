@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import axios from "axios"
 
 export const signup = createAsyncThunk("signupuser", async (body) => {
-  const res = await fetch("http://localhost:5000/user/register", {
+  const res = await fetch("https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/user/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -14,7 +14,7 @@ export const signup = createAsyncThunk("signupuser", async (body) => {
 });
 
 export const login = createAsyncThunk("loginuser", async (body) => {
-  const res = await fetch("http://localhost:5000/user/login", {
+  const res = await fetch("https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/user/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -30,7 +30,7 @@ export const updateLevel = createAsyncThunk(
   async ({ level }, thunkAPI) => {
     try {
       console.log(thunkAPI.getState().auth.username);
-      const response = await fetch("http://localhost:5000/user/updatelevel", {
+      const response = await fetch("https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/user/updatelevel", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +56,7 @@ export const startRound = createAsyncThunk(
     try {
       console.log("start round");
       const response = await fetch(
-        "http://localhost:5000/progress/startround",
+        "https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/progress/startround",
         {
           method: "POST",
           headers: {
@@ -82,7 +82,7 @@ export const endRound = createAsyncThunk(
   "endRound",
   async ({ level }, thunkAPI) => {
     try {
-      const response = await fetch("http://localhost:5000/progress/endround", {
+      const response = await fetch("https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/progress/endround", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

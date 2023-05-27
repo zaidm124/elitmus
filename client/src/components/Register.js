@@ -33,7 +33,7 @@ export default function (props) {
 
   const userAuthnticated = async () => {
     axios
-      .get("http://localhost:5000/user/isUserAuth", {
+      .get("https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/user/isUserAuth", {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },
