@@ -30,6 +30,10 @@ const verifyJWT = (req, res, next) => {
         if (progress.r1s) {
           r1s = progress.r1s;
         }
+        var completed = false;
+        if (progress.r5e != null) {
+          completed = true;
+        }
         models.User.findOne({ where: { username: u.username } }).then(
           (user) => {
             const newtoken = jwt.sign(
@@ -41,10 +45,10 @@ const verifyJWT = (req, res, next) => {
                 isAdmin: user.isAdmin,
                 success: true,
                 isAuth: true,
-                r1s
+                r1s,completed
               },
               "jwt",
-              { expiresIn: '1d' }
+              { expiresIn: "1d" }
             );
             req.newtoken = newtoken;
             next();

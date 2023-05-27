@@ -69,6 +69,10 @@ function login(req, res) {
               if(progress.r1s){
                 r1s=progress.r1s;
               }
+              var completed=false;
+              if(progress.r5e!=null){
+                completed=true;
+              }
               const token = jwt.sign(
                 {
                   username: user.username,
@@ -78,6 +82,7 @@ function login(req, res) {
                   isAdmin: user.isAdmin,
                   success: true,
                   isAuth: true,
+                  completed:completed
                 },
                 "jwt",
                 { expiresIn: '1d' },
@@ -91,7 +96,7 @@ function login(req, res) {
                     isAdmin: user.isAdmin,
                     success: true,
                     isAuth: true,
-                    r1s
+                    r1s,completed
                   });
                 }
               );

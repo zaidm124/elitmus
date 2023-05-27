@@ -91,7 +91,7 @@ function timeToString(time) {
   let formattedHH = hh.toString().padStart(2, "0");
   let formattedMM = mm.toString().padStart(2, "0");
 
-  return `${formattedDD}days :${formattedHH} hrs: ${formattedMM} minutes`
+  return `${formattedDD} days :${formattedHH} hrs: ${formattedMM} minutes`
 }
 
 async function leaderboard(req,res){
