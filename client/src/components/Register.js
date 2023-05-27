@@ -53,7 +53,8 @@ export default function (props) {
                 name: data.name,
                 username: data.username,
                 isTimer:true,
-                initialTime:data.r1s
+                initialTime:data.r1s,
+                completed:data.completed
               })
             );
           } else {

@@ -117,6 +117,7 @@ export const authSlice = createSlice({
     msg: "",
     isTimer: false,
     initialTime: null,
+    completed:false
   },
   reducers: {
     updateAuthData: (state, action) => {
@@ -129,6 +130,7 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
       state.isTimer = action.payload.isTimer;
       state.initialTime = action.payload.initialTime;
+      state.completed=action.payload.completed;
     },
     addToken: (state, action) => {
       state.token = localStorage.getItem("token");
@@ -147,6 +149,9 @@ export const authSlice = createSlice({
       state.initialLevel = 0;
       state.level = 0;
     },
+    completeGame:(state)=>{
+      state.completed=true;
+    }
   },
   extraReducers: {
     [signup.pending]: (state, action) => {
@@ -181,6 +186,7 @@ export const authSlice = createSlice({
           isAdmin,
           isAuth,
           r1s,
+          completed
         },
       }
     ) => {
@@ -198,6 +204,7 @@ export const authSlice = createSlice({
         state.isAuth = isAuth;
         state.isTimer = true;
         state.initialTime = r1s;
+        state.completed=completed
 
         localStorage.setItem("msg", message);
         localStorage.setItem("token", token);
@@ -219,7 +226,7 @@ export const {
   resetGame,
   addToken,
   addUser,
-  logout,
+  logout,completeGame
 } = authSlice.actions;
 
 export default authSlice.reducer;
