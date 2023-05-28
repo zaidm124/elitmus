@@ -3,7 +3,7 @@
 ### Candidate ID: 5350013
 
 ### Hosted Website: https://zaidbhimala.me
-### Admin Username: admin
+### Admin Username: admin@gmail.com
 ### Admin Password: admin@elitmus
 <br/>
 

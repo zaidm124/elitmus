@@ -98,7 +98,7 @@ async function leaderboard(req,res){
     const progress=await models.Progress.findAll();
     var a=[];
     progress.forEach(element => {
-        if(element.username==="admin"){
+        if(element.username==="admin@gmail.com" || element.username==="admin"){
             return;
         }
         a.push({})
