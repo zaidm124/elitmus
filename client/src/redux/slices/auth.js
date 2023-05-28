@@ -158,7 +158,9 @@ export const authSlice = createSlice({
     isTimer: false,
     initialTime: null,
     completed: 0,
-    gameon:true,
+    gameon: true,
+    err: "",
+    success: "",
   },
   reducers: {
     updateAuthData: (state, action) => {
@@ -172,7 +174,7 @@ export const authSlice = createSlice({
       state.isTimer = action.payload.isTimer;
       state.initialTime = action.payload.initialTime;
       state.completed = action.payload.completed;
-      state.gameon=action.payload.gameon
+      state.gameon = action.payload.gameon;
     },
     addToken: (state, action) => {
       state.token = localStorage.getItem("token");
@@ -200,22 +202,29 @@ export const authSlice = createSlice({
     stopLoading: (state) => {
       state.loading = false;
     },
-    setgame:(state)=>{
-      state.gameon=true;
-    },unsetgame:(state)=>{
-      state.gameon=false;
-    }
+    setgame: (state) => {
+      state.gameon = true;
+    },
+    unsetgame: (state) => {
+      state.gameon = false;
+    },
+    seterr: (state, action) => {
+      state.err = action.payload.err;
+    },
+    setsuccess: (state, action) => {
+      state.success = action.payload.success;
+    },
   },
   extraReducers: {
     [signup.pending]: (state, action) => {
       state.loading = true;
     },
-    [signup.fulfilled]: (state, { payload: { error, msg } }) => {
+    [signup.fulfilled]: (state, { payload: { success, message } }) => {
       state.loading = false;
-      if (error) {
-        state.error = error;
+      if (!success) {
+        state.err = message;
       } else {
-        state.msg = msg;
+        state.success = message;
       }
     },
     [signup.rejected]: (state, action) => {
@@ -230,7 +239,7 @@ export const authSlice = createSlice({
       state,
       {
         payload: {
-          error,
+          success,
           message,
           token,
           username,
@@ -244,10 +253,9 @@ export const authSlice = createSlice({
       }
     ) => {
       state.loading = false;
-      if (error) {
-        state.error = error;
+      if (!success) {
+        state.err = message;
       } else {
-        state.msg = message;
         state.token = token;
         state.username = username;
         state.name = name;
@@ -258,7 +266,7 @@ export const authSlice = createSlice({
         state.isTimer = true;
         state.initialTime = r1s;
         state.completed = completed;
-        state.gameon=level==0?false:true;
+        state.gameon = level == 0 ? false : true;
 
         localStorage.setItem("msg", message);
         localStorage.setItem("token", token);
@@ -273,26 +281,26 @@ export const authSlice = createSlice({
     },
     [updateLevel.fulfilled]: (state, action) => {
       state.level = action.payload;
-      if(action.payload==1 || action.payload==3){
-        state.gameon=true;
-      }else{
-        state.gameon=false;
+      if (action.payload == 1 || action.payload == 3) {
+        state.gameon = true;
+      } else {
+        state.gameon = false;
       }
       state.loading = false;
     },
     [updateLevel.rejected]: (state) => {
       state.loading = false;
     },
-    [updateCompletion.pending]:(state,action)=>{
-      state.loading=true;
+    [updateCompletion.pending]: (state, action) => {
+      state.loading = true;
     },
-    [updateCompletion.fulfilled]:(state,action)=>{
-      state.loading=false;
-      state.completed=action.payload;
+    [updateCompletion.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.completed = action.payload;
     },
-    [updateCompletion.rejected]:(state,action)=>{
-      state.loading=false;
-    }
+    [updateCompletion.rejected]: (state, action) => {
+      state.loading = false;
+    },
   },
 });
 
@@ -305,7 +313,10 @@ export const {
   logout,
   completeGame,
   startLoading,
-  stopLoading,setgame,unsetgame
+  stopLoading,
+  setgame,
+  unsetgame,
+  seterr,setsuccess
 } = authSlice.actions;
 
 export default authSlice.reducer;
