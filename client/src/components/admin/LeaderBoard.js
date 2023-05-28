@@ -38,7 +38,7 @@ export default function LeaderBoard() {
 
   React.useEffect(()=>{
 
-    axios.get("http://localhost:5000/admin/leaderboard",{}).then((res)=>{
+    axios.get("https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/admin/leaderboard",{}).then((res)=>{
       if(res.data.success){
         const r=[];
         

@@ -20,8 +20,9 @@ function signUp(req, res) {
               password: hash,
               level: 0,
               isAdmin: req.body.isAdmin | 0,
+              completed:0,
             };
-            await models.Progress.create({username:req.body.username})
+            await models.Progress.create({ username: req.body.username });
             models.User.create(user)
               .then((result) => {
                 res.status(201).json({
@@ -49,8 +50,6 @@ function signUp(req, res) {
     });
 }
 
-
-
 function login(req, res) {
   models.User.findOne({ where: { username: req.body.username } })
     .then((user) => {
@@ -64,14 +63,12 @@ function login(req, res) {
           user.password,
           async function (err, result) {
             if (result) {
-              const progress=await models.Progress.findOne({where:{username:req.body.username}});
-              var r1s=null;
-              if(progress.r1s){
-                r1s=progress.r1s;
-              }
-              var completed=false;
-              if(progress.r5e!=null){
-                completed=true;
+              const progress = await models.Progress.findOne({
+                where: { username: req.body.username },
+              });
+              var r1s = null;
+              if (progress.r1s) {
+                r1s = progress.r1s;
               }
               const token = jwt.sign(
                 {
@@ -82,10 +79,10 @@ function login(req, res) {
                   isAdmin: user.isAdmin,
                   success: true,
                   isAuth: true,
-                  completed:completed
+                  completed: user.completed,
                 },
                 "jwt",
-                { expiresIn: '1d' },
+                { expiresIn: "1d" },
                 function (err, token) {
                   res.status(200).json({
                     message: "Authentication successful!",
@@ -96,7 +93,8 @@ function login(req, res) {
                     isAdmin: user.isAdmin,
                     success: true,
                     isAuth: true,
-                    r1s,completed
+                    r1s,
+                    completed:user.completed,
                   });
                 }
               );
@@ -162,8 +160,53 @@ function updatelevel(req, res) {
     });
 }
 
+function gamecompletion(req, res) {
+  models.User.findOne({ where: { username: req.body.username } })
+    .then((user) => {
+      if (user === null) {
+        res.status(401).json({
+          message: "User Not Found!",
+          success: false,
+        });
+      } else {
+        models.User.update(
+          {
+            completed: req.body.complete,
+          },
+          {
+            where: {
+              username: req.body.username,
+            },
+          }
+        )
+          .then((result) => {
+            res.status(201).json({
+              message: "Game Mode Completion Updated Successfully",
+              completed: req.body.complete,
+              success: true,
+            });
+          })
+          .catch((error) => {
+            res.status(500).json({
+              message: "Something went wrong!",
+              success: false,
+              error,
+            });
+          });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Something went wrong!",
+        success: false,
+        error,
+      });
+    });
+}
+
 module.exports = {
   signUp: signUp,
   login: login,
   updatelevel: updatelevel,
+  gamecompletion
 };

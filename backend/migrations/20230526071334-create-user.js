@@ -24,6 +24,9 @@ module.exports = {
       isAdmin: {
         type: Sequelize.INTEGER
       },
+      completed:{
+        type:Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

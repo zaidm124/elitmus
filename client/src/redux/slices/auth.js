@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const signup = createAsyncThunk("signupuser", async (body) => {
   const res = await fetch(
-    "http://localhost:5000/user/register",
+    "https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/user/register",
     {
       method: "POST",
       headers: {
@@ -18,7 +18,7 @@ export const signup = createAsyncThunk("signupuser", async (body) => {
 
 export const login = createAsyncThunk("loginuser", async (body) => {
   const res = await fetch(
-    "http://localhost:5000/user/login",
+    "https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/user/login",
     {
       method: "POST",
       headers: {
@@ -37,7 +37,7 @@ export const updateLevel = createAsyncThunk(
     try {
       console.log(thunkAPI.getState().auth.username);
       const response = await fetch(
-        "http://localhost:5000/user/updatelevel",
+        "https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/user/updatelevel",
         {
           method: "PUT",
           headers: {
@@ -65,7 +65,7 @@ export const startRound = createAsyncThunk(
     try {
       console.log("start round");
       const response = await fetch(
-        "http://localhost:5000/progress/startround",
+        "https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/progress/startround",
         {
           method: "POST",
           headers: {
@@ -92,7 +92,7 @@ export const endRound = createAsyncThunk(
   async ({ level }, thunkAPI) => {
     try {
       const response = await fetch(
-        "http://localhost:5000/progress/endround",
+        "https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/progress/endround",
         {
           method: "POST",
           headers: {
@@ -120,7 +120,7 @@ export const updateCompletion = createAsyncThunk(
     try {
       console.log(thunkAPI.getState().auth.username);
       const response = await fetch(
-        "http://localhost:5000/user/complete",
+        "https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/user/complete",
         {
           method: "PUT",
           headers: {

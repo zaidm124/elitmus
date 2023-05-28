@@ -12,6 +12,8 @@ server.listen(PORT, () => {
 // const bodyParser = require('body-parser');
 
 // const userRoute = require('./routes/user');
+// const progressRoute = require('./routes/progress');
+// const adminRoute = require('./routes/admin');
 
 // const cors = require("cors")
 
@@ -28,6 +30,8 @@ server.listen(PORT, () => {
 //  app.use(cors(corsOptions))
 
 // app.use("/user", userRoute);
+// app.use("/progress", progressRoute);
+// app.use("/admin",adminRoute );
 
 // exports.novus=app;
 
