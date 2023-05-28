@@ -14,7 +14,7 @@ const Description = () => {
           <li>Once you clear all rounds you will have the whole story.</li>
           <li>In the final round you have to identify the murderer.</li>
           <li>
-            Don't forget to compile the complete story after each round ! !
+            Don't forget to compile the complete story after each round!
           </li>
         </ol>
       </p>

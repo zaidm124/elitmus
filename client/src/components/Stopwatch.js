@@ -57,15 +57,15 @@ function Stopwatch() {
         </span>
         <span class="txt">DD</span>
         <span class="digit" id="min">
-          {hr}
+           {` ${hr}`}  
         </span>
         <span class="txt">Hr</span>
         <span class="digit" id="sec">
-          {mm}
+           {` ${mm}`}  
         </span>
         <span class="txt">Min</span>
         <span class="digit" id="count">
-          {ss}
+           {` ${ss}`}  
         </span>
         <span class="txt">Sec</span>
       </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { signup, login, updateAuthData } from "../redux/slices/auth";
+import { signup, login, updateAuthData, startLoading, stopLoading, unsetgame, setgame } from "../redux/slices/auth";
 import jwt from "jwt-decode";
 import axios from "axios";
 export default function (props) {
@@ -22,18 +22,21 @@ export default function (props) {
 
   const handleregister = (e) => {
     e.preventDefault();
+    setUsername(username.trim());
     dispatch(signup({ name, username, password }));
     changeAuthMode();
   };
-
+  
   const handleLogin = (e) => {
     e.preventDefault();
+    // setUsername(username.trim());
     dispatch(login({ username, password }));
   };
 
   const userAuthnticated = async () => {
+    // dispatch(startLoading());
     axios
-      .get("https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/user/isUserAuth", {
+      .get("http://localhost:5000/user/isUserAuth", {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },
@@ -41,10 +44,16 @@ export default function (props) {
       .then((response) => {
         console.log(response);
         if (response.data.auth) {
+          // dispatch(stopLoading());
           const data = jwt(response.data.token);
           localStorage.setItem("token", response.data.token);
           console.log(data);
           if (data.success) {
+            if(data.level==0){
+              dispatch(unsetgame());
+            }else{
+              dispatch(setgame());
+            }
             dispatch(
               updateAuthData({
                 level: data.level,
@@ -54,7 +63,8 @@ export default function (props) {
                 username: data.username,
                 isTimer:true,
                 initialTime:data.r1s,
-                completed:data.completed
+                completed:data.completed,
+                gameon:data.level===0?false:true,
               })
             );
           } else {
@@ -69,6 +79,7 @@ export default function (props) {
             );
           }
         } else {
+          // dispatch(stopLoading());
           updateAuthData({
             level: null,
             isAdmin: null,
@@ -77,6 +88,9 @@ export default function (props) {
             username: null,
           });
         }
+      }).catch((err)=>{
+        console.log(err);
+        // dispatch(stopLoading());
       });
   };
 

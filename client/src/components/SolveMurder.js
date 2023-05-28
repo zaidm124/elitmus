@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import q1 from "../assets/images/q1.jpg";
-import { completeGame, endRound, startRound, updateAuthData } from "../redux/slices/auth";
+import { completeGame, endRound, startRound, updateAuthData, updateCompletion } from "../redux/slices/auth";
 import { useDispatch, useSelector } from "react-redux";
 
 const ques = {
@@ -30,15 +30,22 @@ const SolveMurder = ({ setNavStatus, levelUp, setGameon, gameOn }) => {
       if (ans === ques.answer) {
         setMessage("Congratulations! You won");
         dispatch(endRound({ level: 4 }));
-        dispatch(completeGame());
+        // dispatch(completeGame());
+        dispatch(updateCompletion({complete:1}));
       } else {
         setMessage("Incorrect Answer");
-        setAttemps(attemps - 1);
+        var a=attemps;
+        setAttemps(a - 1);
+        console.log(attemps)
+        if(attemps==1){
+          console.log("update completion")
+          dispatch(updateCompletion({complete:-1}));
+          // dispatch(completeGame(-1))
+        }
       }
     }
   };
 
-  console.log(timer);
 
     return (
       <div>

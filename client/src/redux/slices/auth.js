@@ -2,25 +2,31 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import axios from "axios"
 
 export const signup = createAsyncThunk("signupuser", async (body) => {
-  const res = await fetch("https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/user/register", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  const res = await fetch(
+    "http://localhost:5000/user/register",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
 
   return await res.json();
 });
 
 export const login = createAsyncThunk("loginuser", async (body) => {
-  const res = await fetch("https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/user/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  const res = await fetch(
+    "http://localhost:5000/user/login",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
 
   return await res.json();
 });
@@ -30,16 +36,19 @@ export const updateLevel = createAsyncThunk(
   async ({ level }, thunkAPI) => {
     try {
       console.log(thunkAPI.getState().auth.username);
-      const response = await fetch("https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/user/updatelevel", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: thunkAPI.getState().auth.username,
-          level: level,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/user/updatelevel",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: thunkAPI.getState().auth.username,
+            level: level,
+          }),
+        }
+      );
 
       const data = await response.json();
       console.log(data);
@@ -56,7 +65,7 @@ export const startRound = createAsyncThunk(
     try {
       console.log("start round");
       const response = await fetch(
-        "https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/progress/startround",
+        "http://localhost:5000/progress/startround",
         {
           method: "POST",
           headers: {
@@ -82,20 +91,51 @@ export const endRound = createAsyncThunk(
   "endRound",
   async ({ level }, thunkAPI) => {
     try {
-      const response = await fetch("https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/progress/endround", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: thunkAPI.getState().auth.username,
-          level: level,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/progress/endround",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: thunkAPI.getState().auth.username,
+            level: level,
+          }),
+        }
+      );
       const data = await response.json();
       console.log(data);
 
       return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+export const updateCompletion = createAsyncThunk(
+  "updateCompletion",
+  async ({ complete }, thunkAPI) => {
+    try {
+      console.log(thunkAPI.getState().auth.username);
+      const response = await fetch(
+        "http://localhost:5000/user/complete",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: thunkAPI.getState().auth.username,
+            complete,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
+      return complete;
     } catch (err) {
       console.log(err);
     }
@@ -117,7 +157,8 @@ export const authSlice = createSlice({
     msg: "",
     isTimer: false,
     initialTime: null,
-    completed:false
+    completed: 0,
+    gameon:true,
   },
   reducers: {
     updateAuthData: (state, action) => {
@@ -130,7 +171,8 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
       state.isTimer = action.payload.isTimer;
       state.initialTime = action.payload.initialTime;
-      state.completed=action.payload.completed;
+      state.completed = action.payload.completed;
+      state.gameon=action.payload.gameon
     },
     addToken: (state, action) => {
       state.token = localStorage.getItem("token");
@@ -149,8 +191,19 @@ export const authSlice = createSlice({
       state.initialLevel = 0;
       state.level = 0;
     },
-    completeGame:(state)=>{
-      state.completed=true;
+    completeGame: (state) => {
+      state.completed = true;
+    },
+    startLoading: (state) => {
+      state.loading = true;
+    },
+    stopLoading: (state) => {
+      state.loading = false;
+    },
+    setgame:(state)=>{
+      state.gameon=true;
+    },unsetgame:(state)=>{
+      state.gameon=false;
     }
   },
   extraReducers: {
@@ -186,7 +239,7 @@ export const authSlice = createSlice({
           isAdmin,
           isAuth,
           r1s,
-          completed
+          completed,
         },
       }
     ) => {
@@ -204,7 +257,8 @@ export const authSlice = createSlice({
         state.isAuth = isAuth;
         state.isTimer = true;
         state.initialTime = r1s;
-        state.completed=completed
+        state.completed = completed;
+        state.gameon=level==0?false:true;
 
         localStorage.setItem("msg", message);
         localStorage.setItem("token", token);
@@ -214,9 +268,31 @@ export const authSlice = createSlice({
       state.loading = false;
       state.isAuth = false;
     },
+    [updateLevel.pending]: (state) => {
+      state.loading = true;
+    },
     [updateLevel.fulfilled]: (state, action) => {
       state.level = action.payload;
+      if(action.payload==1 || action.payload==3){
+        state.gameon=true;
+      }else{
+        state.gameon=false;
+      }
+      state.loading = false;
     },
+    [updateLevel.rejected]: (state) => {
+      state.loading = false;
+    },
+    [updateCompletion.pending]:(state,action)=>{
+      state.loading=true;
+    },
+    [updateCompletion.fulfilled]:(state,action)=>{
+      state.loading=false;
+      state.completed=action.payload;
+    },
+    [updateCompletion.rejected]:(state,action)=>{
+      state.loading=false;
+    }
   },
 });
 
@@ -226,7 +302,10 @@ export const {
   resetGame,
   addToken,
   addUser,
-  logout,completeGame
+  logout,
+  completeGame,
+  startLoading,
+  stopLoading,setgame,unsetgame
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -6,7 +6,7 @@ import Button from "react-bootstrap/esm/Button";
 import { useDispatch } from "react-redux";
 import { endRound, startRound } from "../redux/slices/auth";
 
-const Instapost = ({ levelUp, setGameon }) => {
+const Instapost = ({ levelUp }) => {
   const dispatch = useDispatch();
   return (
     <div>
@@ -25,7 +25,6 @@ const Instapost = ({ levelUp, setGameon }) => {
       <Button
         onClick={() => {
           levelUp();
-          setGameon(true);
           dispatch(endRound({level:0}));
           dispatch(startRound({level:1}));
         }}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import q1 from "../assets/images/q1.jpg";
-import { endRound, startRound } from "../redux/slices/auth";
+import { endRound, startRound, updateCompletion } from "../redux/slices/auth";
 import { useDispatch } from "react-redux";
 
 const ques = [
@@ -13,30 +13,36 @@ const ques = [
 ];
 
 let intervalId = null;
-const Observation = ({ levelUp, setGameon, gameOn }) => {
+const Observation = ({ levelUp }) => {
   const [status, setStatus] = useState(0);
   const [message, setMessage] = useState(null);
   const [timer, setTimer] = useState(10);
   const [answer, setAnswer] = useState("");
   const dispatch = useDispatch();
+  const [attemps,setAttemps]=useState(2);
   const selectedQues = ques[Math.floor(Math.random() * ques.length)];
 
   const handleSubmit = () => {
     if (answer === "") {
       return;
     } else {
-      if (answer === selectedQues.answer) {
+      var ans=answer.toLowerCase();
+      ans.trim();
+      if (ans === selectedQues.answer) {
         // setMessage("Congratulations! You won");
         setStatus(2);
         dispatch(endRound({level:2}));
-
+        setMessage("");
       } else {
         setMessage("Incorrect Answer");
+        setAttemps(attemps-1);
+        if(attemps==1){
+          dispatch(updateCompletion({complete:-1}))
+        }
       }
     }
   };
 
-  console.log(timer);
   return (
     <div>
       {status === 0 ? (
@@ -54,6 +60,8 @@ const Observation = ({ levelUp, setGameon, gameOn }) => {
                 After solving the riddle, you will be given a link to a pdf
                 which contains the next part of the story.
               </li>
+              <li>You will only get 2 attemps to give the correct answer</li>
+              <li>If you waste both attemps, your hunt will be over.</li>
               <li>
                 Answer the question correctly to proceed ahead in Murder Mystry
               </li>
@@ -84,6 +92,7 @@ const Observation = ({ levelUp, setGameon, gameOn }) => {
           <div>
             <Button onClick={handleSubmit}>Submit</Button>
           </div>
+          <div>Attempts Remaining: {attemps}</div>
         </div>
       ) : status === 2 ? (
         <div>
@@ -102,7 +111,7 @@ const Observation = ({ levelUp, setGameon, gameOn }) => {
             <Button
               onClick={() => {
                 levelUp();
-                setGameon(true);
+                // setGameon(true);
                 dispatch(startRound({level:3}));
               }}
             >

@@ -12,6 +12,7 @@ import {
   startRound,
   endRound,
   updateAuthData,
+  setgame,
 } from "../redux/slices/auth";
 import Quiz from "./Quiz";
 import Hint1 from "./Hint1";
@@ -42,24 +43,22 @@ const mystry = [
 
 export default function Dashboard({ status, setStatus }) {
   // const [level, setLevel] = useState(0)
-  const [gameon, setGameon] = useState(false);
+  // const [gameon, setGameon] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const dispatch = useDispatch();
-  console.log("gameon: ", gameon);
 
-  const { initialLevel, level, completed } = useSelector((state) => state.auth);
-  useEffect(() => {
-    if (level == 0) {
-      setGameon(false);
-    } else {
-      setGameon(true);
-    }
-  }, []);
-  console.log("level: ", level);
+  const { initialLevel, level, completed,gameon } = useSelector((state) => state.auth);
+  // useEffect(() => {
+  //   if (level == 0) {
+  //     setGameon(false);
+  //   } else {
+  //     setGameon(true);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (initialLevel && initialLevel > 0) {
-      setIsModal(true);
+      // setIsModal(true);
     }
   }, [initialLevel]);
 
@@ -69,8 +68,8 @@ export default function Dashboard({ status, setStatus }) {
     const l = {
       level: level + 1,
     };
+    // setGameon(false);
     dispatch(updateLevel(l));
-    setGameon(false);
   };
 
   const updateLevels = (i) => {
@@ -80,21 +79,33 @@ export default function Dashboard({ status, setStatus }) {
     } else {
       // dispatch(resetGame())
       dispatch(updateLevel({ level: 0 }));
-      setGameon(false);
+      // setGameon(false);
       setIsModal(false);
     }
   };
-  console.log("At Level:", level);
 
-  if (completed && !status) {
+  if (completed==1 && !status) {
     return (
       <div className="dashboard-container">
         <div className="game-container">
-          <h3 style={{color:"black"}}>Congratulations!!! You have completed the game.</h3>
+          <h3 style={{ color: "black" }}>
+            Congratulations!!! You have completed the game.
+          </h3>
           <p>You can view the Leaderboard to check you rank.</p>
         </div>
       </div>
     );
+  }else if(completed==-1 && !status){
+    return(
+      <div className="dashboard-container">
+        <div className="game-container">
+          <h3 style={{ color: "black" }}>
+            Ooops!!! Unfortunately you have come to a dead end and your game is over.
+          </h3>
+          <p>You can view the Leaderboard to check you rank.</p>
+        </div>
+      </div>
+    )
   } else {
     return (
       <div className="dashboard-container">
@@ -111,23 +122,21 @@ export default function Dashboard({ status, setStatus }) {
         {/* <Quiz levelUp={levelUp} /> */}
         {status == 1 ? (
           <LeaderBoard />
-        ) : gameon === true ? (
+        ) : gameon == true ? (
           <div className="game-container">
             {level === 0 ? (
-              <Instapost setGameon={setGameon} levelUp={levelUp} />
+              <Instapost levelUp={levelUp} />
             ) : null}
             {level === 1 ? <SpotDifference levelUp={levelUp} /> : null}
             {level === 2 ? (
               <Observation
-                setGameon={setGameon}
-                gameOn={gameon}
                 levelUp={levelUp}
               />
             ) : null}
             {level === 3 ? <MemoryGame levelUp={levelUp} /> : null}
             {level === 4 ? <SolveMurder setNavStatus={setStatus} /> : null}
           </div>
-        ) : (
+        ) : gameon == false ? (
           <>
             {level > 0 ? (
               <h1>Congratulations on completing Round {level}</h1>
@@ -141,7 +150,7 @@ export default function Dashboard({ status, setStatus }) {
               </p>
               <Button
                 onClick={() => {
-                  setGameon(!gameon);
+                  dispatch(setgame());
                   if (level == 0) {
                     dispatch(startRound({ level: 0 }));
                   }
@@ -151,7 +160,7 @@ export default function Dashboard({ status, setStatus }) {
               </Button>
             </div>
           </>
-        )}
+        ) : null}
       </div>
     );
   }

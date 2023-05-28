@@ -10,7 +10,7 @@ function Stats() {
 
   const getAverage=async()=>{
     axios
-      .get("https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/admin/average", {
+      .get("http://localhost:5000/admin/average", {
       })
       .then((response) => {
         console.log(response);
@@ -21,7 +21,7 @@ function Stats() {
   }
   const getCount = async () => {
     axios
-      .get("https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/admin/count", {
+      .get("http://localhost:5000/admin/count", {
       })
       .then((response) => {
         console.log(response);
@@ -98,6 +98,7 @@ function Stats() {
   }
   return (
     <>
+    <h1 style={{color:"black"}}>Statistics</h1>
       <Grid container spacing={6}>
         <Grid item xs={12} md={6} lg={5}>
           <div>

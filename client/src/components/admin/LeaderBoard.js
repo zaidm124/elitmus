@@ -11,7 +11,8 @@ import axios from 'axios';
 
 const columns = [
   // { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'username', label: 'Username',align:"center", minWidth: 100 },
+  { id: 'rank', label: 'Rank',align:"left", minWidth: 100 },
+  { id: 'username', label: 'Username',align:"left", minWidth: 100 },
   {
     id: 'rounds',
     label: 'Number of Rounds Completed',
@@ -26,13 +27,9 @@ const columns = [
   },
 ];
 
-function createData( username, rounds, time) {
-  return {  username, rounds, time };
+function createData( rank,username, rounds, time) {
+  return {  rank,username, rounds, time };
 }
-
-const rows = [
-  createData('Brazil', 'BR', 210147125, 8515767),
-];
 
 export default function LeaderBoard() {
   const [page, setPage] = React.useState(0);
@@ -41,13 +38,13 @@ export default function LeaderBoard() {
 
   React.useEffect(()=>{
 
-    axios.get("https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/admin/leaderboard",{}).then((res)=>{
+    axios.get("http://localhost:5000/admin/leaderboard",{}).then((res)=>{
       if(res.data.success){
         const r=[];
         
-        res.data.leaderboard.map((element)=>{
+        res.data.leaderboard.map((element,i)=>{
           r.push(
-            createData(element.username,element.rounds,element.time)
+            createData(i+1,element.username,element.rounds,element.time)
             )
           })
           

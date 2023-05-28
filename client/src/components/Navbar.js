@@ -38,21 +38,14 @@ function NavBar({ isAdmin, status, setStatus }) {
             <Navbar.Collapse className="justify-content-end">
               {isAdmin ? (
                 <Navbar.Text
-                  onClick={() => setStatus(0)}
+                  onClick={() => setStatus(!status)}
                   style={{ cursor: "pointer", color: "black" }}
                 >
-                  Statistics
+                  {status == 1 ? "Statistics" : "Leaderboard"}
                 </Navbar.Text>
               ) : null}
               {/* // <Navbar.Text onClick={()=>setStatus(0)} style={{cursor:"pointer",color:"black"}} >Home</Navbar.Text>:null} */}
-              {isAdmin ? (
-                <Navbar.Text
-                  onClick={() => setStatus(1)}
-                  style={{ cursor: "pointer", color: "black" }}
-                >
-                  Leaderboard
-                </Navbar.Text>
-              ) : null}
+
               {!isAdmin ? (
                 <Navbar.Text
                   onClick={() => setStatus(!status)}
