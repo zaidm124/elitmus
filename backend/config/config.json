@@ -3,21 +3,21 @@
     "username": "root",
     "password": "12345678",
     "database": "elitmus_db",
-    "host": "34.122.241.229",
+    "host": "elitmus.crbzqcesbrxt.eu-north-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": "12345678",
     "database": "elitmus_db",
-    "host": "34.122.241.229",
+    "host": "elitmus.crbzqcesbrxt.eu-north-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
     "password": "12345678",
     "database": "elitmus_db",
-    "host": "34.122.241.229",
+    "host": "elitmus.crbzqcesbrxt.eu-north-1.rds.amazonaws.com",
     "dialect": "mysql"
   }
 }
