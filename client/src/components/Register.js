@@ -66,7 +66,7 @@ export default function (props) {
     // dispatch(startLoading());
     axios
       .get(
-        "https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus/user/isUserAuth",
+        " http://13.48.131.130:5000/user/isUserAuth",
         {
           headers: {
             "x-access-token": localStorage.getItem("token"),

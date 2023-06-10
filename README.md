@@ -78,9 +78,9 @@ Tech Stack Used: Node JS,
 
 Database Used: MySQL running on google cloud 
 
-Backend Deployed on Google Cloud using cloud functions
+Backend Deployed on AWS EC2 Instance
 
-Deployed backend URL: https://us-central1-lofty-seer-386909.cloudfunctions.net/gcp-func-novus
+Deployed backend URL:  http://13.48.131.130:5000
 
 JWT Authentication: The User cannot access the game unless he/she is not logged in.
 
