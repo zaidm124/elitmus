@@ -38,7 +38,7 @@ export default function LeaderBoard() {
 
   React.useEffect(()=>{
 
-    axios.get(" http://13.48.131.130:5000/admin/leaderboard",{}).then((res)=>{
+    axios.get("https://tasty-gold-turtleneck.cyclic.app/admin/leaderboard",{}).then((res)=>{
       if(res.data.success){
         const r=[];
         

@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const signup = createAsyncThunk("signupuser", async (body) => {
   const res = await fetch(
-    " http://13.48.131.130:5000/user/register",
+    "https://tasty-gold-turtleneck.cyclic.app/user/register",
     {
       method: "POST",
       headers: {
@@ -18,7 +18,7 @@ export const signup = createAsyncThunk("signupuser", async (body) => {
 
 export const login = createAsyncThunk("loginuser", async (body) => {
   const res = await fetch(
-    " http://13.48.131.130:5000/user/login",
+    "https://tasty-gold-turtleneck.cyclic.app/user/login",
     {
       method: "POST",
       headers: {
@@ -37,7 +37,7 @@ export const updateLevel = createAsyncThunk(
     try {
       console.log(thunkAPI.getState().auth.username);
       const response = await fetch(
-        " http://13.48.131.130:5000/user/updatelevel",
+        "https://tasty-gold-turtleneck.cyclic.app/user/updatelevel",
         {
           method: "PUT",
           headers: {
@@ -65,7 +65,7 @@ export const startRound = createAsyncThunk(
     try {
       console.log("start round");
       const response = await fetch(
-        " http://13.48.131.130:5000/progress/startround",
+        "https://tasty-gold-turtleneck.cyclic.app/progress/startround",
         {
           method: "POST",
           headers: {
@@ -92,7 +92,7 @@ export const endRound = createAsyncThunk(
   async ({ level }, thunkAPI) => {
     try {
       const response = await fetch(
-        " http://13.48.131.130:5000/progress/endround",
+        "https://tasty-gold-turtleneck.cyclic.app/progress/endround",
         {
           method: "POST",
           headers: {
@@ -120,7 +120,7 @@ export const updateCompletion = createAsyncThunk(
     try {
       console.log(thunkAPI.getState().auth.username);
       const response = await fetch(
-        " http://13.48.131.130:5000/user/complete",
+        "https://tasty-gold-turtleneck.cyclic.app/user/complete",
         {
           method: "PUT",
           headers: {

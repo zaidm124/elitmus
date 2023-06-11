@@ -80,7 +80,8 @@ Database Used: MySQL running on google cloud
 
 Backend Deployed on AWS EC2 Instance
 
-Deployed backend URL:  http://13.48.131.130:5000
+Deployed backend URL: https://tasty-gold-turtleneck.cyclic.app
+
 
 JWT Authentication: The User cannot access the game unless he/she is not logged in.
 

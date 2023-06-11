@@ -10,7 +10,7 @@ function Stats() {
 
   const getAverage=async()=>{
     axios
-      .get(" http://13.48.131.130:5000/admin/average", {
+      .get("https://tasty-gold-turtleneck.cyclic.app/admin/average", {
       })
       .then((response) => {
         console.log(response);
@@ -21,7 +21,7 @@ function Stats() {
   }
   const getCount = async () => {
     axios
-      .get(" http://13.48.131.130:5000/admin/count", {
+      .get("https://tasty-gold-turtleneck.cyclic.app/admin/count", {
       })
       .then((response) => {
         console.log(response);

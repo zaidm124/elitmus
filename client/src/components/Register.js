@@ -66,7 +66,7 @@ export default function (props) {
     // dispatch(startLoading());
     axios
       .get(
-        " http://13.48.131.130:5000/user/isUserAuth",
+        "https://tasty-gold-turtleneck.cyclic.app/user/isUserAuth",
         {
           headers: {
             "x-access-token": localStorage.getItem("token"),
